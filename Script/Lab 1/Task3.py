@@ -25,7 +25,7 @@ for i in range(0,510,40):
         array[0:510, i:i+20] = 0
 for i in range(0,510,40):
 
-        array[i:i+20, 100:510 ] = 0
+        array[i:i+20, 000:510 ] = 0
 
 cv2.imshow( 'Win', array)
 cv2.waitKey()
