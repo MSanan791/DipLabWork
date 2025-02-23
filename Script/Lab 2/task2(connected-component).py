@@ -30,6 +30,8 @@ def connected_component(image):
         for i in range(0,x):
             for j in range(0,y):
                 if(objects[i][j] == rem[k]):
+
+
                     objects[i][j] = dic[len(dic)-1]
         dic.pop()
     return objects
