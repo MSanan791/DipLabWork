@@ -1,6 +1,6 @@
 import numpy as np
 import cv2 as cv
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 def PDF(image_hist, image):
     [x,y] = image.shape
@@ -25,7 +25,7 @@ def transform_f(image, transform_funct):
             image[i,j] = transform_funct[image[i,j]]
     return image
 
-image_data = cv.imread(r"D:\Semester 6\DIP\Lab\Lab 4\low_con.jpg", cv.IMREAD_GRAYSCALE )
+image_data = cv.imread(r"C:\Users\usama\Pictures\Whats app\IMG-20250223-WA0041[1].jpg", cv.IMREAD_GRAYSCALE )
 image = np.array(image_data)
 
 image_hist = np.zeros(256)
@@ -36,17 +36,17 @@ for i in range(x):
     for j in range(y):
         image_hist[image[i,j]] += 1
 
-plt.plot(range(256),image_hist)
-plt.show()
+# plt.plot(range(256),image_hist)
+# plt.show()
 PDF = PDF(image_hist, image)
-plt.plot(range(256),PDF)
-plt.show()
+# plt.plot(range(256),PDF)
+# plt.show()
 CPDF = CPDF(image_hist, image)
-plt.plot(range(256),CPDF)
-plt.show()
+# plt.plot(range(256),CPDF)
+# plt.show()
 transform_funct = CPDF * 255
-plt.plot(range(256),transform_funct)
-plt.show()
+# plt.plot(range(256),transform_funct)
+# plt.show()
 
 cv.imshow("image", image)
 cv.waitKey(0)
