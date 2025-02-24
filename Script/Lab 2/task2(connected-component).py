@@ -10,6 +10,8 @@ def connected_component(image):
     new_image[1:x+1,1:y+1] = image
     objects = np.zeros((x, y), np.uint8)
 
+
+
     for i in range(1,x+1):
         for j in range(1,y+1):
             if(new_image[i][j] >= 5 ):
