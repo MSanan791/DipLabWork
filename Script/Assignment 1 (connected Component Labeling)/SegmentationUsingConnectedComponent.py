@@ -19,7 +19,7 @@ def thresh1(img):
                 img[i][j] = 0
             else:
                 img[i][j] = 255
-
+    # cv.imshow('img', img)
     return img
 
 def thresh2(img):
@@ -30,7 +30,7 @@ def thresh2(img):
                 img[i][j] = 0
             else:
                 img[i][j] = 100
-
+    # cv.imshow('img', img)
     return img
 
 
@@ -135,7 +135,7 @@ if max_label > 0:
     scaled = (labeled * (255 // max_label)).astype(np.uint8)
 else:
     scaled = np.zeros_like(labeled, dtype=np.uint8)
-
+cv.imshow('img', scaled)
 img2 = concat_image(scaled, img2)
 
 
@@ -163,5 +163,5 @@ score = dice_coef(img2, mask_img )
 
 
 print(f"Score: {score}")
-
+cv.waitKey(0)
 cv.destroyAllWindows()
