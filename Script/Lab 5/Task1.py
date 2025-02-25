@@ -11,4 +11,5 @@ def readimg_color(path):
     return img_data
 
 img1 = readimg_grey(r"D:\Semester 6\DIP\Lab\Lab 5\lena.png")
+
 img1_mean = np.mean(img1)
