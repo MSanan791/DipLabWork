@@ -1,16 +1,25 @@
 import cv2 as cv
 import numpy as np
+import matplotlib.pyplot as plt
+
+
+
+def dice_coef(mask1, mask2):
+    mask1 = (mask1 > 0).astype(np.uint8)
+    mask2 = (mask2 > 0).astype(np.uint8)
+    intersection = np.sum(mask1 * mask2)
+    dice = 2.*(intersection/(np.sum(mask1) + np.sum(mask2) +1e-6))
+    return dice
 
 def thresh1(img):
     [x, y] = img.shape
     for i in range(x):
         for j in range(y):
-            if img[i][j] > 70:
+            if img[i][j] > 85:
                 img[i][j] = 0
             else:
                 img[i][j] = 255
-    cv.imshow('img', img)
-    cv.waitKey(0)
+
     return img
 
 def thresh2(img):
@@ -20,9 +29,8 @@ def thresh2(img):
             if img[i][j] > 180:
                 img[i][j] = 0
             else:
-                img[i][j] = 155
-    cv.imshow('img', img)
-    cv.waitKey(0)
+                img[i][j] = 100
+
     return img
 
 
@@ -78,16 +86,48 @@ def connected_components(img):
     return result
 
 
-# Read image
-filename = r"D:\Semester 6\Projects\Pycharm\DIP\DIP Lab Work\Script\Assignment 1 (connected Component Labeling)\dataset_DIP_assignment\train\images\003.bmp"
-img = cv.imread(filename, cv.IMREAD_GRAYSCALE)
-cv.imshow("Original", img)
-cv.waitKey(0)
-# Threshold the image if needed
-thresh2(img)
-# Apply connected components
-labeled = connected_components(img)
+def get_segment(img):
+    [x, y] = img.shape
+    segments = []
+    for i in range(x):
+        for j in range(y):
+            if img[i, j] > 1:
+                segments.append([i, j])
+    return segments
 
+def concat_image(img1, img2):
+    max_value = np.max(img1)
+    img1[img1 > 0] = max_value
+    segments = get_segment(img1)
+    # cv.imshow('img1', img2)
+    for segment in segments:
+        [i,j] = segment
+        img2[i , j] = img1[i , j]
+    return img2
+
+# Read image
+filename = r"C:\Users\usama\PycharmProjects\DipLabWork\Script\Assignment 1 (connected Component Labeling)\dataset_DIP_assignment\test\images\241.bmp"
+mask_file = r"C:\Users\usama\PycharmProjects\DipLabWork\Script\Assignment 1 (connected Component Labeling)\dataset_DIP_assignment\test\masks\241.png"
+img1 = cv.imread(filename, cv.IMREAD_GRAYSCALE)
+img2 = cv.imread(filename, cv.IMREAD_GRAYSCALE)
+original = cv.imread(filename, cv.IMREAD_GRAYSCALE)
+mask_img = cv.imread(mask_file, cv.IMREAD_GRAYSCALE)
+# PLotting Histogram
+image_hist = np.zeros(256)
+[x,y] = original.shape
+for i in range(x):
+    for j in range(y):
+        image_hist[original[i,j]] += 1
+plt.plot(range(256),image_hist)
+plt.show()
+# Threshold the image
+img1 = thresh1(img1)
+img2 = thresh2(img2)
+
+
+
+# Applying connected components
+labeled = connected_components(img1)
 # Normalize for visualization
 # Scale the labels to be visible (multiply by a factor that spreads the colors)
 max_label = np.max(labeled)
@@ -95,8 +135,35 @@ if max_label > 0:
     scaled = (labeled * (255 // max_label)).astype(np.uint8)
 else:
     scaled = np.zeros_like(labeled, dtype=np.uint8)
-cv.imshow("Connected Components", scaled)
-cv.waitKey(0)
+
+img2 = concat_image(scaled, img2)
+
+
+# plotting the images
+plt.subplot(1, 3, 1)
+plt.imshow(original, cmap='gray')
+plt.title("Original")
+plt.axis("off")
+
+# Second image
+plt.subplot(1, 3, 2)
+plt.imshow(img2, cmap='gray')
+plt.title("CCA Segmentation")
+plt.axis("off")
+
+plt.subplot(1, 3, 3)
+plt.imshow(mask_img, cmap='gray')
+plt.title("Mask")
+plt.axis("off")
+
+# Show the figure
+plt.show()
+
+score = dice_coef(img2, mask_img )
+
+
+print(f"Score: {score}")
+
 cv.destroyAllWindows()
 
 
