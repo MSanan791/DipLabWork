@@ -106,8 +106,8 @@ def concat_image(img1, img2):
     return img2
 
 # Read image
-filename = r"C:\Users\usama\PycharmProjects\DipLabWork\Script\Assignment 1 (connected Component Labeling)\dataset_DIP_assignment\test\images\241.bmp"
-mask_file = r"C:\Users\usama\PycharmProjects\DipLabWork\Script\Assignment 1 (connected Component Labeling)\dataset_DIP_assignment\test\masks\241.png"
+filename = r"D:\Semester 6\Projects\Pycharm\DIP\DIP Lab Work\Script\Assignment 1 (connected Component Labeling)\dataset_DIP_assignment\test\images\241.bmp"
+mask_file = r"D:\Semester 6\Projects\Pycharm\DIP\DIP Lab Work\Script\Assignment 1 (connected Component Labeling)\dataset_DIP_assignment\test\masks\241.png"
 img1 = cv.imread(filename, cv.IMREAD_GRAYSCALE)
 img2 = cv.imread(filename, cv.IMREAD_GRAYSCALE)
 original = cv.imread(filename, cv.IMREAD_GRAYSCALE)
@@ -165,5 +165,3 @@ score = dice_coef(img2, mask_img )
 print(f"Score: {score}")
 
 cv.destroyAllWindows()
-
-
