@@ -2,56 +2,79 @@ import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt
 
-def PDF(image_hist, image):
-    [x,y] = image.shape
-    PDF = np.zeros(256)
-    for i in range(256):
-        PDF[i] = image_hist[i] / (x*y)
-    return PDF
 
-def CPDF(image_hist, image):
-    [x,y] = image.shape
-    CPDF = np.zeros(256)
-    pdf = 0
-    for i in range(256):
-        pdf += image_hist[i] / (x*y)
-        CPDF[i] = pdf
-    return CPDF
+def compute_histogram(image):
+    """ Compute histogram manually without using OpenCV's built-in function. """
+    hist = np.zeros(256, dtype=np.int32)
+    for pixel in image.ravel():
+        hist[pixel] += 1
+    return hist
 
-def transform_f(image, transform_funct):
-    [x,y] = image.shape
-    for i in range(x):
-        for j in range(y):
-            image[i,j] = transform_funct[image[i,j]]
-    return image
 
-image_data = cv.imread(r"low_con.jpg", cv.IMREAD_GRAYSCALE )
-image = np.array(image_data)
+def compute_pdf(hist, total_pixels):
+    """ Compute the Probability Density Function (PDF). """
+    return hist / total_pixels
 
-image_hist = np.zeros(256)
 
-[x,y] = image.shape
+def compute_cpdf(pdf):
+    """ Compute the Cumulative Probability Density Function (CPDF). """
+    return np.cumsum(pdf)
 
-for i in range(x):
-    for j in range(y):
-        image_hist[image[i,j]] += 1
 
-plt.plot(range(256),image_hist)
+def histogram_equalization(image):
+    """ Perform histogram equalization manually. """
+    hist = compute_histogram(image)
+    total_pixels = image.size
+    pdf = compute_pdf(hist, total_pixels)
+    cpdf = compute_cpdf(pdf)
+
+    # Mapping function
+    transform_funct = (cpdf * 255).astype(np.uint8)
+
+    # Apply transformation using NumPy
+    equalized_image = transform_funct[image]
+
+    return equalized_image, hist, transform_funct
+
+
+# Load grayscale image
+image = cv.imread("low_con.jpg", cv.IMREAD_GRAYSCALE)  # Adjust path if needed
+
+if image is None:
+    print("Error: Image not found!")
+    exit()
+
+# Perform histogram equalization
+equalized_image, hist, transform_funct = histogram_equalization(image)
+
+# Plot original histogram
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.plot(hist, color='black')
+plt.title("Original Histogram")
+
+# Plot transformation function
+plt.subplot(1, 2, 2)
+plt.plot(transform_funct, color='blue')
+plt.title("Transformation Function")
 plt.show()
-PDF = PDF(image_hist, image)
-plt.plot(range(256),PDF)
-plt.show()
-CPDF = CPDF(image_hist, image)
-plt.plot(range(256),CPDF)
-plt.show()
-transform_funct = CPDF * 255
-plt.plot(range(256),transform_funct)
+
+# Display images
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.imshow(image, cmap="gray")
+plt.title("Original Image")
+plt.axis("off")
+
+plt.subplot(1, 2, 2)
+plt.imshow(equalized_image, cmap="gray")
+plt.title("Histogram Equalized Image")
+plt.axis("off")
 plt.show()
 
-cv.imshow("image", image)
-cv.waitKey(0)
-cv.imshow("image_hist", transform_f(image, transform_funct))
-cv.waitKey(0)
+# Save the processed image
+cv.imwrite("/home/pi/equalized_image.jpg", equalized_image)
+print("Equalized image saved as 'equalized_image.jpg'")
 
 # import numpy as np
 # import cv2 as cv
