@@ -52,8 +52,10 @@ plt.show()
 
 cv.imshow("image", image)
 cv.waitKey(0)
-cv.imshow("image_hist", transform_f(image, transform_funct))
+tr = transform_f(image, transform_funct)
+cv.imshow("image_hist", tr)
 cv.waitKey(0)
+
 
 # import numpy as np
 # import cv2 as cv
