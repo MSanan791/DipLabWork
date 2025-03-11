@@ -1,5 +1,4 @@
-import os
-os.environ['QT_QPA_PLATFORM'] = 'xcb'
+
 import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt
@@ -53,8 +52,12 @@ plt.show()
 cv.imshow("image", image)
 cv.waitKey(0)
 tr = transform_f(image, transform_funct)
-cv.imshow("image_hist", tr)
-cv.waitKey(0)
+plt.figure()
+plt.imshow(tr, cmap="gray")
+plt.title("Histogram Equalized Image")
+plt.axis("off")
+plt.show()
+
 
 
 # import numpy as np
