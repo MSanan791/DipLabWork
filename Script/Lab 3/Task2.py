@@ -43,14 +43,14 @@ def twenty_mean(img, mean):
     cv.imshow('img', img)
     cv.waitKey(0)
 
-img1 = readimg_grey(r"D:\Semester 6\DIP\Lab\Lab 3\gradient.png")
+img1 = readimg_grey(r"gradient.png")
 img1_mean = np.mean(img1)
 
 less_mean(img1, img1_mean)
-img1 = readimg_grey(r"D:\Semester 6\DIP\Lab\Lab 3\gradient.png")
+img1 = readimg_grey(r"gradient.png")
 img1_mean = np.mean(img1)
 great_mean(img1, img1_mean)
-img1 = readimg_grey(r"D:\Semester 6\DIP\Lab\Lab 3\gradient.png")
+img1 = readimg_grey(r"gradient.png")
 img1_mean = np.mean(img1)
 twenty_mean(img1, img1_mean)
 

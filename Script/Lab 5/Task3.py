@@ -29,7 +29,7 @@ def Laplacian(img):
     cv.imshow("Laplacian", img_laplacian)
     return img_laplacian
 
-file_name = r"F:\Other computers\My Laptop (1)\Semester 6\DIP\Lab\Lab 5\Fig03.tif"
+file_name = r"Fig03.tif"
 img = readimg_grey(file_name)
 cv.imshow("Original", img)
 

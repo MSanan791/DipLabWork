@@ -91,5 +91,5 @@ def segment_image(image_path):
 
     return labels
 
-image = cv2.imread(r"C:\Users\sanan\Pictures\cc.png", cv2.IMREAD_GRAYSCALE)
+image = cv2.imread(r"cc.png", cv2.IMREAD_GRAYSCALE)
 segment_image(r"C:\Users\sanan\Pictures\cc.png")

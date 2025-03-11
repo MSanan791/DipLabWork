@@ -20,7 +20,7 @@ def power_transform(img, gamma):
 
 
 
-img1 = readimg_grey(r"D:\Semester 6\DIP\Lab\Lab 3\document.jpg")
+img1 = readimg_grey(r"document.jpg")
 # showing original imagee
 cv.imshow("img1", img1)
 cv.waitKey(0)

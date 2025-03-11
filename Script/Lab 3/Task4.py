@@ -23,5 +23,5 @@ def level_slicing(img, low_level, high_level, value):
 
 
 
-img1 = readimg_grey(r"D:\Semester 6\DIP\Lab\Lab 3\gradient.png")
+img1 = readimg_grey(r"gradient.png")
 level_slicing(img1, 100,200, 210)

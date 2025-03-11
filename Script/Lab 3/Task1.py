@@ -10,7 +10,7 @@ def readimg_color(path):
     img_data = np.array(img)
     return img_data
 
-img1 = readimg_grey(r"D:\Semester 6\DIP\Lab\Lab 3\gradient.png")
+img1 = readimg_grey(r"gradient.png")
 img1_mean = np.mean(img1)
 
 [x,y] = img1.shape
@@ -25,7 +25,7 @@ for i in range(x):
 cv.imshow("img1", img1)
 cv.waitKey(0)
 
-img1 = readimg_grey(r"D:\Semester 6\DIP\Lab\Lab 3\gradient.png")
+img1 = readimg_grey(r"gradient.png")
 [x,y] = img1.shape
 for i in range(x):
     for j in range(y):

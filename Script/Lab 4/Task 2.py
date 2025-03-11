@@ -129,7 +129,7 @@ lab_image = cv.merge([l, a, b])
 transformed_image = cv.cvtColor(lab_image, cv.COLOR_LAB2BGR)
 
 # Save the equalized image
-cv.imwrite(r"C:\Users\usama\Pictures\Equalized_Image.JPG", transformed_image)
+cv.imwrite(r"Equalized_Image.JPG", transformed_image)
 
 # Show original and transformed images
 cv.imshow("Original Image", image)

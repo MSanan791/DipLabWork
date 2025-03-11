@@ -50,9 +50,9 @@ def filter_max(img1, size = 3):
             img[i,j] = median1
     return img
 
-original = readimg_grey("F:\Other computers\My Laptop (1)\Semester 6\DIP\Lab\Lab 5\Fig02.tif")
-img1 = readimg_grey(r"F:\Other computers\My Laptop (1)\Semester 6\DIP\Lab\Lab 5\Fig02.tif")
-img2 = readimg_grey(r"F:\Other computers\My Laptop (1)\Semester 6\DIP\Lab\Lab 5\Fig02.tif")
+original = readimg_grey("F:Fig02.tif")
+img1 = readimg_grey(r"Fig02.tif")
+img2 = readimg_grey(r"Fig02.tif")
 
 
 plt.subplot(2,4,1)

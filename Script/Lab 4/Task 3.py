@@ -28,7 +28,7 @@ def unpad_img(image):
     unpadded_image = image[1:x_mask+1, 1:y_mask+1]
     return unpadded_image
 # %%
-img = cv.imread(r"D:\Semester 6\DIP\Lab\Lab 4\fig05.tif", cv.IMREAD_GRAYSCALE)
+img = cv.imread(r"fig05.tif", cv.IMREAD_GRAYSCALE)
 img_data = np.array(img)
 cv.imshow("img1", img_data)
 cv.waitKey(0)

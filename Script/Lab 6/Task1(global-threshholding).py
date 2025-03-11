@@ -29,7 +29,7 @@ def median_threshholding(img):
                 img[i][j] = 0
     return img
 
-file_name =r"D:\Semester 6\DIP\Lab\Lab 6\Lab 6\Threshold_Image.png"
+file_name =r"Threshold_Image.png"
 testing = cv.imread(file_name, cv.IMREAD_GRAYSCALE)
 plt.subplot(2,2,1)
 plt.imshow(testing, cmap='gray')

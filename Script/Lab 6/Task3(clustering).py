@@ -40,5 +40,5 @@ def kmeans_segmentation(image_path, k=3):
     plt.show()
 
 # Example usage
-image_path = r"D:\Semester 6\DIP\Lab\Lab 5\Fig03.tif"
+image_path = r"Threshold_Image.png"
 kmeans_segmentation(image_path, k=3)

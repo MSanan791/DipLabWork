@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import cv2 as cv
 
-img = cv2.imread(r"D:\Semester 6\DIP\Lab\Lab 4\low_con.jpg", cv.IMREAD_GRAYSCALE)
+img = cv2.imread(r"low_con.jpg", cv.IMREAD_GRAYSCALE)
 img_data = np.array(img)
 [x, y] = img_data.shape
 

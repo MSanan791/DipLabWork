@@ -43,7 +43,7 @@ def local_threshholding_median(img):
     return result
 
 
-file_name = r"D:\Semester 6\DIP\Lab\Lab 6\Lab 6\Threshold_Image.png"
+file_name = r"Threshold_Image.png"
 image_test = cv.imread(file_name, cv.IMREAD_GRAYSCALE)
 plt.subplot(1, 2, 1)
 plt.imshow(local_threshholding(image_test), cmap='gray')
