@@ -105,6 +105,28 @@ transform_funct = [cpdfs[i] * 255 for i in range(3)]
 
 # Apply transformation
 transformed_image = transform_image(image, transform_funct)
+transformed_image = cv.medianBlur(transformed_image, 15)
+sharpening_kernel = np.array([[0, -1,  0],
+                               [-1,  5, -1],
+                               [0, -1,  0]])
+
+# Apply the sharpening filter
+transformed_image = cv.filter2D(transformed_image, -1, sharpening_kernel)
+
+lab_image = cv.cvtColor(transformed_image, cv.COLOR_BGR2LAB)
+
+# Split LAB channels
+l, a, b = cv.split(lab_image)
+
+# Apply CLAHE (Adaptive Histogram Equalization) to L-channel
+clahe = cv.createCLAHE(clipLimit=3.0, tileGridSize=(8,8))
+l = clahe.apply(l)
+
+# Merge LAB channels back
+lab_image = cv.merge([l, a, b])
+
+# Convert back to BGR color space
+transformed_image = cv.cvtColor(lab_image, cv.COLOR_LAB2BGR)
 
 # Save the equalized image
 cv.imwrite(r"C:\Users\usama\Pictures\Equalized_Image.JPG", transformed_image)
@@ -114,3 +136,5 @@ cv.imshow("Original Image", image)
 cv.imshow("Equalized Image", transformed_image)
 cv.waitKey(0)
 cv.destroyAllWindows()
+
+

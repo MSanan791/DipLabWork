@@ -45,6 +45,6 @@ def normalise_image(img):
     img = img * 255
     return img.astype(np.uint8)
 
-f_name = r"D:\Semester 6\DIP\Lab\Lab 5\Fig03.tif"
+f_name = r"F:\Other computers\My Laptop (1)\Semester 6\DIP\Lab\Lab 5\Fig03.tif"
 img = cv.imread(f_name, cv.IMREAD_GRAYSCALE)
 sobel_filter(img)
