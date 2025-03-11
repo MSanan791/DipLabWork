@@ -1,8 +1,8 @@
 import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt
-import os
-os.environ['QT_QPA_PLATFORM'] = 'xcb'
+
+
 def kmeans_segmentation(image_path, k=3):
     img = cv.imread(image_path, cv.IMREAD_GRAYSCALE)
     mean_intensity = np.mean(img)
