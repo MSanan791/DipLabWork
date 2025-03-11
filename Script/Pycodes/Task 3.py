@@ -41,4 +41,5 @@ plt.subplot(1, 2, 2)
 plt.title("Filtered Image")
 plt.imshow(mask, cmap='gray')
 
+
 plt.show()
