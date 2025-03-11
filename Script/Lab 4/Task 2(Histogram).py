@@ -1,3 +1,5 @@
+import os
+os.environ['QT_QPA_PLATFORM'] = 'xcb'
 import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt

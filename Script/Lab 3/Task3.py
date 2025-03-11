@@ -1,6 +1,7 @@
 import numpy as np
 import cv2 as cv
-
+import os
+os.environ['QT_QPA_PLATFORM'] = 'xcb'
 def readimg_grey(path):
     img = cv.imread(path, cv.IMREAD_GRAYSCALE)
     img_data = np.array(img)
