@@ -1,7 +1,6 @@
 import numpy as np
-import pandas as pd
 import cv2 as cv
-
+import matplotlib.pyplot as plt
 
 def white_padding(img, pad_pix):
     row = len(img)
@@ -152,12 +151,18 @@ def hog_transform(image):
     return feature_vector
 
 
-image = cv.imread("D:/NUST/SEMESTER-6/DIP-LAB/DIP-VS CODE/LAB_10/image4.png", 0)
-cv.imshow("Original Fig", image)
-cv.waitKey(0)
+cap = cv.VideoCapture(0)
+while True:
+    ret, frame = cap.read()
+    frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    cv.imshow("Original", frame)
+    plt.show()
+    feature_vector = hog_transform(frame)
+    print(feature_vector)
 
-feature_vector = hog_transform(image.copy())
-print(feature_vector)
+    normalized_feature_vector = block_normalization(feature_vector)
+    print(normalized_feature_vector)
 
-normalized_feature_vector = block_normalization(feature_vector)
-print(normalized_feature_vector)
+
+
+
