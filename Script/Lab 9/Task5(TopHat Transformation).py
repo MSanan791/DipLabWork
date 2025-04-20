@@ -1,6 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import cv2
+
 
 def erosion(structuring_element, picture1_element):
     picture_element = picture1_element.copy()
@@ -16,7 +16,7 @@ def erosion(structuring_element, picture1_element):
                 boolmatrix = matrixofinterest >= structuring_element
                 erode = np.any(boolmatrix == False)
             if(erode == True):
-                picture_element[i, j] = 0
+                picture_element[i, j] = np.min(matrixofinterest)
 
     return picture_element
 
@@ -33,20 +33,31 @@ def dilation(structuring_element, picture1_element):
             boolmatrix = (matrixofinterest!= 0) & (structuring_element == 1)
             dilate = np.any(boolmatrix == True)
             if(dilate == True):
-                picture_element[i, j] = 255
+                picture_element[i, j] = np.max(matrixofinterest)
     return picture_element
 
-img = cv2.imread(r'./fp.tif', cv2.IMREAD_GRAYSCALE)
-cv2.imshow('Before Erosion', img)
-# Showing Erosion
-cv2.imshow('Erosion', erosion(cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)), img))
-img = cv2.imread(r'./Fig01.tif', cv2.IMREAD_GRAYSCALE)
-cv2.imshow('Erosion1', erosion(cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (4, 4)), img))
-cv2.imshow('Erosion2', erosion(cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5)), img))
-cv2.imshow('Erosion3', erosion(cv2.getStructuringElement(cv2.MORPH_CROSS, (5, 5)), img))
-# Showing Dilation
-cv2.imshow('Dilation', dilation(cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3)), img))
-cv2.imshow('Dilation2', dilation(cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3,3)), img))
-cv2.imshow('Dilation3', dilation(cv2.getStructuringElement(cv2.MORPH_RECT, (3,3)), img))
+def Opening(structuring_element, picture1_element):
+    processing_image = picture1_element.copy()
+    processing_image = erosion(structuring_element, processing_image)
+    processing_image = dilation(structuring_element, processing_image)
+    return processing_image
+
+def Closing(structuring_element, picture1_element):
+    processing_image = picture1_element.copy()
+    processing_image = dilation(structuring_element, processing_image)
+    processing_image = erosion(structuring_element, processing_image)
+    return processing_image
+
+
+
+
+img= cv2.imread(r'./rice.png', cv2.IMREAD_GRAYSCALE)
+ellipse = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5,5))
+opened = Opening(ellipse,img)
+tophat =   opened - img
+
+cv2.imshow('original', img)
+cv2.imshow('opened', opened)
+cv2.imshow('tophat', tophat)
 cv2.waitKey(0)
 cv2.destroyAllWindows()

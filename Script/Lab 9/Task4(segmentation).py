@@ -36,8 +36,28 @@ def dilation(structuring_element, picture1_element):
                 picture_element[i, j] = np.max(matrixofinterest)
     return picture_element
 
+def Opening(structuring_element, picture1_element):
+    processing_image = picture1_element.copy()
+    processing_image = erosion(structuring_element, processing_image)
+    processing_image = dilation(structuring_element, processing_image)
+    return processing_image
+
+def Closing(structuring_element, picture1_element):
+    processing_image = picture1_element.copy()
+    processing_image = dilation(structuring_element, processing_image)
+    processing_image = erosion(structuring_element, processing_image)
+    return processing_image
+
+
 img = cv2.imread(r'Objects.png', cv2.IMREAD_GRAYSCALE)
 cv2.imshow('Original', img)
+ellipse = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (80, 80))
+rect = cv2.getStructuringElement(cv2.MORPH_RECT, (70, 70))
+cross = cv2.getStructuringElement(cv2.MORPH_CROSS, (100, 100))
+
+cv2.imshow('Opening', Opening(ellipse, img))
+cv2.imshow('Rectangle', Opening(rect, img))
+cv2.imshow('Cross', Opening(cross, img))
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

@@ -20,6 +20,7 @@ def dilation(structuring_element, picture1_element):
     return picture_element
 
 img = cv2.imread(r'./broken_text.tif', cv2.IMREAD_GRAYSCALE)
+cv2.imshow('Original', img)
 dil = dilation(cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3)), img)
 dil = dilation(cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3)), img)
 cv2.imshow('img', dil )

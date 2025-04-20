@@ -41,6 +41,7 @@ img = cv2.imread(r'./Fig01.tif', cv2.IMREAD_GRAYSCALE)
 
 erode = erosion(cv2.getStructuringElement(cv2.MORPH_CROSS, (5, 5)), img)
 dilate = dilation(cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5,5)), img)
-cv2.imshow('Erosion', dilate)
+cv2.imshow('Erosion', erode)
+cv2.imshow('Dilation', dilate)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
