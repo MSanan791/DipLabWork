@@ -11,41 +11,40 @@ def showimg(img, title="Image"):
     cv2.imshow(title, img)
     return
 
-def fourier_transform(img2, shift = 0):
-    img = img2.copy()
+
+def fourier_transform(img2, shift=0):
+    img = img2.copy().astype(np.float64)
+
+
     ox, oy = img.shape
-    img = cv2.resize(img,(64,64))
+    img = cv2.resize(img, (64, 64))
 
     fft_img = np.zeros(img.shape, dtype=np.complex128)
-    x,y = fft_img.shape
+    x, y = fft_img.shape
 
+    # Pre-shift the image to center
     for i in range(x):
         for j in range(y):
-            mul = -1 **(i+j)
-            img[i, j] = img[i, j]*((-1) ** mul)
+            img[i, j] *= (-1) ** (i + j)
 
+    # Manual DFT
     for i in range(x):
         for j in range(y):
             sum_val = 0
             for k in range(x):
                 for l in range(y):
-                    sum_val += img[k, l] * np.exp(-2j * np.pi * ((i * k / x) +( j * l / y)))
-            fft_img[i, j] += sum_val
+                    sum_val += img[k, l] * np.exp(-2j * np.pi * ((i * k / x) + (j * l / y)))
+            fft_img[i, j] = sum_val
 
-    for i in range(x):
-        for j in range(y):
-            mul = -1 ** (i + j)
-            fft_img[i, j] = fft_img[i, j] * ((-1) ** mul)
-
-         # print(f"computing img {i} and {j}")
-
-    mag_fft = abs(fft_img)
+    mag_fft = np.abs(fft_img)
     mag_fft = np.log(mag_fft + 1)
+    mag_fft = np.fft.fftshift(mag_fft)  # center the output
     img_8bit = cv2.normalize(mag_fft, None, 0, 255, cv2.NORM_MINMAX)
     img_8bit = img_8bit.astype(np.uint8)
-    img_8bit = cv2.resize(img_8bit,(oy,ox))
-            # cv2.imshow('fftcutom_og_output', img)
-    return img_8bit * 255
+    img_8bit = cv2.resize(img_8bit, (oy, ox))
+
+    return img_8bit
+
 
 def fft_builtin(img):
     img_fft = img.copy()
@@ -60,27 +59,20 @@ def fft_builtin(img):
 
     return img_fft
 
-
 img = readimg_greyscale(r'./Fig01 (1).tif')
 
 fft_img = fourier_transform(img)
 
-img = readimg_greyscale(r'./Fig01 (1).tif')
-
-fft_built = fft_builtin(fft_img)
+# DO NOT re-read img again
+# fft_built = fft_builtin(fft_img)  # WRONG
+fft_built = fft_builtin(img)  # CORRECT
 
 plt.subplot(1, 2, 1)
-plt.title("DFT (NumPy)")
+plt.title("DFT (Manual)")
 plt.imshow(fft_img, cmap='gray')
 plt.subplot(1, 2, 2)
-plt.title("DFT (Manual)")
-plt.imshow(fft_built,cmap='gray')
+plt.title("DFT (NumPy)")
+plt.imshow(fft_built, cmap='gray')
+
 plt.show()
 
-
-cv2.imshow('img', img)
-cv2.imshow('fftimg custom', fft_img)
-cv2.imshow('fft builtin', fft_built)
-
-cv2.waitKey(0)
-cv2.destroyAllWindows()
